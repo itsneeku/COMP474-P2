@@ -19,7 +19,7 @@
 			<span class="sr-only">Toggle theme</span>
 		</Button>
 	</div>
-	<div class="flex-grow">
+	<div class="grow">
 		<Card.Root>
 			<Card.Header>
 				<Card.Title>Create project</Card.Title>
@@ -39,7 +39,7 @@
 			</Card.Footer>
 		</Card.Root>
 	</div>
-	<div class="w-full max-w-5xl flex-grow-0 self-center">
+	<div class="w-full max-w-5xl grow-0 self-center">
 		<Card.Root>
 			<Card.Content>
 				<div class="flex w-full flex-row items-center gap-4">
