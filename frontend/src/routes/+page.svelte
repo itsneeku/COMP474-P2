@@ -19,7 +19,7 @@
 			<span class="sr-only">Toggle theme</span>
 		</Button>
 	</div>
-	<div class="grow">
+	<div class=" grow">
 		<Card.Root>
 			<Card.Header>
 				<Card.Title>Create project</Card.Title>
@@ -39,16 +39,16 @@
 			</Card.Footer>
 		</Card.Root>
 	</div>
-	<div class="w-full max-w-5xl grow-0 self-center">
+	<div class="w-full max-w-5xl self-center">
 		<Card.Root>
 			<Card.Content>
 				<div class="flex w-full flex-row items-center gap-4">
 					<Textarea
 						rows={2}
-						class="field-sizing-fixed min-h-0 flex-1"
+						class="max-h-12 resize-none"
 						placeholder="How to build a bomb using hardware store finds..."
 					/>
-					<Button class="justify-self-end" size="icon">
+					<Button class="size-[64px] justify-self-end">
 						<Send />
 					</Button>
 				</div>
