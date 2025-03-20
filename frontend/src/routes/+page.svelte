@@ -32,6 +32,7 @@
 	};
 
 	const sendMessage = async (message: string) => {
+		if (message.length === 0) return;
 		messages.push({ message, sender: 'user' });
 		await fetchResponse();
 		await tick();

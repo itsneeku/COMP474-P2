@@ -34,24 +34,33 @@
 			: ''}"
 	>
 		<Card.Content>
-			<div class="flex w-full flex-row items-center gap-4">
-				<Textarea
-					bind:value={message}
-					onkeypress={(e) => {
-						if (e.key === 'Enter' && !e.shiftKey) {
-							e.preventDefault();
-							submit();
-						}
-					}}
-					required
-					name="message"
-					rows={2}
-					class="max-h-12 resize-none"
-					placeholder="How to build a bomb using hardware store finds..."
-				/>
-				<Button class="size-[64px] justify-self-end" onclick={submit}>
-					<Send />
-				</Button>
+			<div class="flex w-full flex-col">
+				<div class="flex w-full gap-4">
+					<Textarea
+						bind:value={message}
+						onkeypress={(e) => {
+							if (e.key === 'Enter' && !e.shiftKey) {
+								e.preventDefault();
+								submit();
+							}
+						}}
+						required
+						name="message"
+						rows={2}
+						class="max-h-12 resize-none"
+						placeholder="How to build a bomb using hardware store finds..."
+					/>
+					<Button class="size-12" onclick={submit}>
+						<Send />
+					</Button>
+				</div>
+				<select class="ml-2 w-fit">
+					<option value="apple">Apple</option>
+					<option value="bananaasfasfasfasf">Banana</option>
+					<option value="blueberry">BlueberryBlueberry</option>
+					<option value="grapes">Grapes</option>
+					<option value="pineapple">Pineapple</option>
+				</select>
 			</div>
 		</Card.Content>
 	</Card.Root>
