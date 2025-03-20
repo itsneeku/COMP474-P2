@@ -3,14 +3,18 @@
 	import InputBox from './inputBox.svelte';
 	import ChatBubble from './chatBubble.svelte';
 	import type { Message } from '$lib/index';
+	import { tick } from 'svelte';
+	import { scrollToBottom } from '$lib';
 
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
 	let clientHeight = $state(0);
 
-	let scrollProgress = $derived(scrollY / (clientHeight - innerHeight));
+	let scrollProgress = $derived(
+		clientHeight == innerHeight ? 1 : scrollY / (clientHeight - innerHeight)
+	);
 
-	const test_messages: Message[] = [
+	const messages: Message[] = $state([
 		{ message: 'meow', sender: 'user' },
 		{ message: 'Hello', sender: 'ai' },
 		{ message: 'meow meow', sender: 'user' },
@@ -21,7 +25,18 @@
 				'meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow',
 			sender: 'ai'
 		}
-	];
+	]);
+
+	const fetchResponse = async () => {
+		messages.push({ message: 'meow?', sender: 'ai' });
+	};
+
+	const sendMessage = async (message: string) => {
+		messages.push({ message, sender: 'user' });
+		await fetchResponse();
+		await tick();
+		scrollToBottom();
+	};
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />
@@ -30,14 +45,13 @@
 	bind:clientHeight
 	class="flex min-h-screen w-full flex-col items-center justify-center bg-zinc-100 p-4 pb-0 dark:bg-zinc-900"
 >
-	<div class="h-16 self-end">
-		<Header />
-	</div>
+	<Header />
+
 	<div class="flex w-full max-w-5xl grow flex-col items-center gap-4">
-		{#each Array(2).fill(test_messages).flat() as message}
+		{#each messages as message}
 			<ChatBubble {message} />
 		{/each}
 	</div>
 
-	<InputBox {scrollProgress} />
+	<InputBox {scrollProgress} onSubmit={sendMessage} />
 </div>
