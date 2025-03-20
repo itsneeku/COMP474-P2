@@ -16,6 +16,28 @@
 	};
 
 	let message = $state('');
+
+	// https://openrouter.ai/models?order=top-weekly&max_price=0
+	const models = [
+		{
+			name: 'deepseek-r1'
+		},
+		{
+			name: 'deepseek-r1-zero'
+		},
+		{
+			name: 'gemini-2.0-pro-exp-02-05'
+		},
+		{
+			name: 'gemini-2.0-flash-exp'
+		},
+		{
+			name: 'qwq-32b'
+		},
+		{
+			name: 'llama-3.3-70b-instruct'
+		}
+	];
 </script>
 
 <div class="sticky bottom-0 flex w-full max-w-5xl flex-col self-center">
@@ -55,11 +77,9 @@
 					</Button>
 				</div>
 				<select class="ml-2 w-fit">
-					<option value="apple">Apple</option>
-					<option value="bananaasfasfasfasf">Banana</option>
-					<option value="blueberry">BlueberryBlueberry</option>
-					<option value="grapes">Grapes</option>
-					<option value="pineapple">Pineapple</option>
+					{#each models as model}
+						<option value={model.name}>{model.name}</option>
+					{/each}
 				</select>
 			</div>
 		</Card.Content>
