@@ -29,7 +29,7 @@
 		<ArrowDownIcon />
 	</Button>
 	<Card.Root
-		class="z-10 rounded-3xl rounded-b-none transition-shadow {!scrolledToBottom
+		class="z-10 rounded-3xl rounded-b-none transition-shadow delay-300  {!scrolledToBottom
 			? 'shadow-2xl'
 			: ''}"
 	>
