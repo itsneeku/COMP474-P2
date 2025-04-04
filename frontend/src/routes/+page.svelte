@@ -14,21 +14,19 @@
 		clientHeight == innerHeight ? 1 : scrollY / (clientHeight - innerHeight)
 	);
 
-	const messages: Message[] = $state([
-		{ message: 'Hello', sender: 'ai' },
-	]);
+	const messages: Message[] = $state([{ message: 'Hello', sender: 'ai' }]);
 
 	const fetchResponse = async (message: string) => {
 		const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
 			method: 'POST',
 			headers: {
 				'Authorization':'Bearer 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',
-				'Content-Type': 'application/json',
-				"HTTP-Referer": "<YOUR_SITE_URL>",
-				"X-Title": "<YOUR_SITE_NAME>",
+				'HTTP-Referer': '<YOUR_SITE_URL>', // Optional. Site URL for rankings on openrouter.ai.
+				'X-Title': '<YOUR_SITE_NAME>', // Optional. Site title for rankings on openrouter.ai.
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				model: 'deepseek/deepseek-r1-zero:free',
+				model: 'deepseek/deepseek-v3-base:free',
 				messages: [
 					{
 						role: 'user',
@@ -38,9 +36,13 @@
 			})
 		});
 
-		const data = await response.json();
-
-		messages.push({ message: data.choices[0].message.content, sender: 'ai' });
+		if (!response.ok) {
+			messages.push({ message: `HTTP error! status: ${response.status}`, sender: 'ai' });
+		} else {
+			const data = await response.json();
+			console.log(data);
+			messages.push({ message: data.choices[0].message.content, sender: 'ai' });
+		}
 	};
 
 	const sendMessage = async (message: string) => {
@@ -50,7 +52,6 @@
 		await tick();
 		scrollToBottom();
 	};
-
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />
