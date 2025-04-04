@@ -15,29 +15,42 @@
 	);
 
 	const messages: Message[] = $state([
-		{ message: 'meow', sender: 'user' },
 		{ message: 'Hello', sender: 'ai' },
-		{ message: 'meow meow', sender: 'user' },
-		{ message: 'meow meow meow', sender: 'ai' },
-		{ message: 'meow meow meow meow meow', sender: 'user' },
-		{
-			message:
-				'meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow',
-			sender: 'ai'
-		}
 	]);
 
-	const fetchResponse = async () => {
-		messages.push({ message: 'meow?', sender: 'ai' });
+	const fetchResponse = async (message: string) => {
+		const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+			method: 'POST',
+			headers: {
+				'Authorization':'Bearer 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',
+				'Content-Type': 'application/json',
+				"HTTP-Referer": "<YOUR_SITE_URL>",
+				"X-Title": "<YOUR_SITE_NAME>",
+			},
+			body: JSON.stringify({
+				model: 'deepseek/deepseek-r1-zero:free',
+				messages: [
+					{
+						role: 'user',
+						content: message
+					}
+				]
+			})
+		});
+
+		const data = await response.json();
+
+		messages.push({ message: data.choices[0].message.content, sender: 'ai' });
 	};
 
 	const sendMessage = async (message: string) => {
 		if (message.length === 0) return;
 		messages.push({ message, sender: 'user' });
-		await fetchResponse();
+		await fetchResponse(message);
 		await tick();
 		scrollToBottom();
 	};
+
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />

@@ -19,3 +19,10 @@ cd ./frontend
 pnpm i
 pnpm run dev
 ```
+Or
+
+```
+cd frontend
+npm install
+npm run dev -- --open
+```
