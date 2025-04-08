@@ -6,6 +6,10 @@
 	import { tick } from 'svelte';
 	import { scrollToBottom } from '$lib';
 
+	import { selectedModel } from '$lib/stores/selectedModel';  // Import the store
+
+	let selected; // This will hold the selected model value
+
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
 	let clientHeight = $state(0);
@@ -51,48 +55,65 @@
 	//The the following to be comment or uncomment till line 88 to use local OLLAMA
 
 	const fetchResponse = async (message: string) => {
-		const payload = {
-			model: 'deepseek-r1',
-			messages: [
-			{
-				role: 'user',
-				content: message,
-			},
-			],
-		};
+  const payload = {
+    model: $selectedModel,
+    messages: [
+      {
+        role: 'user',
+        content: message,
+      },
+    ],
+  };
 
-		// try {
-			const res = await fetch('http://localhost:11434/api/chat', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(payload),
-			});
+  try {
+    const response = await fetch('http://localhost:11434/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
 
-			if (!res.ok) {
-			throw new Error(`Ollama API error: ${res.status}`);
-			}
+    let fullResponse = '';
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
 
-			const data = await res.json();
+	// Responses are sent in multiple lines, parse the content only to populate chat messages
+	while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      
+      const decodedText = decoder.decode(value, { stream: true });
+      
+      try {
+        const chunk = JSON.parse(decodedText);
+        if (chunk.message && chunk.message.content) {
+          fullResponse += chunk.message.content;
+        }
+      } catch (e) {
+        console.error('Error parsing chunk:', e);
+      }
+    }
 
-			console.log(data);
 
-			// messages.push({ message: data.choices[0].message.content, sender: 'ai' });
+    // Final output after all chunks are received
+	messages.push({ message: fullResponse.trim(), sender: 'ai' });
 
-		// } catch (error) {
-		// 	messages.push({ message: `${error}`, sender: 'ai' });
-		// 	console.log(`Error calling DeepSeek model: ${error}`);
-		// }
-	};
+  } catch (error) {
+    console.error('Request failed', error);
+  }
+};
 
-	const sendMessage = async (message: string) => {
-		if (message.length === 0) return;
-		messages.push({ message, sender: 'user' });
-		await fetchResponse(message);
-		await tick();
-		scrollToBottom();
-	};
+const sendMessage = async (message: string) => {
+  if (message.length === 0) return;
+	messages.push({ message, sender: 'user' });
+  await fetchResponse(message);
+  await tick();
+  scrollToBottom();
+};
+
+
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />

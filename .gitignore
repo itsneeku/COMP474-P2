@@ -1,2 +1,3 @@
 .direnv
 .env
+backend/node_modules/

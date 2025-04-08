@@ -5,6 +5,12 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import ArrowDownIcon from '@lucide/svelte/icons/arrow-down';
 	import { scrollToBottom } from '$lib';
+	import { selectedModel } from '$lib/stores/selectedModel';
+
+	const handleModelChange = (event) => {
+		selectedModel.set(event.target.value); 
+		console.log(selectedModel) // Set the selected model in the store
+	};
 
 	let { scrollProgress = $bindable(0), onSubmit } = $props();
 
@@ -36,6 +42,9 @@
 		},
 		{
 			name: 'llama-3.3-70b-instruct'
+		},
+		{
+			name: 'llama3.2:latest'
 		}
 	];
 </script>
@@ -76,7 +85,7 @@
 						<Send />
 					</Button>
 				</div>
-				<select class="ml-2 w-fit">
+				<select class="ml-2 w-fit" onchange={handleModelChange}>
 					{#each models as model}
 						<option value={model.name}>{model.name}</option>
 					{/each}
