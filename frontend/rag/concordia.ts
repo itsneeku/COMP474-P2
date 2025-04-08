@@ -58,6 +58,6 @@ const index = async (filename: string) => {
 	}
 };
 
-// scrape(links);
-// index('0.json');
-// index('1.json');
+await scrape(links);
+index('0.json');
+index('1.json');
