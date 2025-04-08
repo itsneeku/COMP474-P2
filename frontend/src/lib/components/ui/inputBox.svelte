@@ -1,18 +1,18 @@
 <script lang="ts">
+	import { scrollToBottom } from '$lib';
+	import { ai, onSubmit } from '$lib/ai.svelte';
 	import ModelSelector from '$lib/components/ui/ModelSelector.svelte';
 	import { Button } from '$lib/components/ui/button/';
-	import Send from '@lucide/svelte/icons/send';
 	import * as Card from '$lib/components/ui/card';
+	import { Label } from '$lib/components/ui/label';
+	import { Switch } from '$lib/components/ui/switch/index.js';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import ArrowDownIcon from '@lucide/svelte/icons/arrow-down';
-	import { scrollToBottom } from '$lib';
-	import { onSubmit, ai } from '$lib/ai.svelte';
+	import Send from '@lucide/svelte/icons/send';
 	let { scrollProgress = $bindable(0) } = $props();
 	let message = $state('');
 	let scrolledToBottom = $derived(scrollProgress >= 0.99);
 	let responding = $state(false);
-	import { Label } from '$lib/components/ui/label';
-	import { Switch } from '$lib/components/ui/switch/index.js';
 	const submit = async () => {
 		if (message.trim().length === 0 || !ai.active) return false;
 
@@ -72,7 +72,7 @@
 							<Switch id="grounding" bind:checked={ai.grounding} />
 						</div>
 						<Label class="text-xs text-gray-500">
-							Use context from Concordia's website on the BCompSc program.</Label
+							Use context from Concordia's website and Wikipedia.</Label
 						>
 					</div>
 				</div>

@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { messages } from '$lib/ai.svelte';
+	import ChatBubble from '$lib/components/ui/chatBubble.svelte';
 	import Header from '$lib/components/ui/header.svelte';
 	import InputBox from '$lib/components/ui/inputBox.svelte';
-	import ChatBubble from '$lib/components/ui/chatBubble.svelte';
-	import { messages } from '$lib/ai.svelte';
 
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
@@ -22,7 +22,7 @@
 	<Header />
 
 	<div class="flex w-full max-w-5xl grow flex-col items-center gap-4">
-		{#each messages as message}
+		{#each messages.filter((msg) => msg.role !== 'system') as message}
 			<ChatBubble {message} />
 		{/each}
 	</div>
