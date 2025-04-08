@@ -1,4 +1,8 @@
 # COMP474 Project 2
+40245233 - Nicolae Rusu
+40240753 - Johanna Luangxay
+40248336 - Jolina Vu
+
 
 ## Satisfied Requirements
 - Multi-agent arch:
