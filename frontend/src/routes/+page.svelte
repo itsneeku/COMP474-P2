@@ -17,7 +17,7 @@
 
 <div
 	bind:clientHeight
-	class="items-centerjustify-center flex min-h-screen w-full flex-col bg-zinc-100 p-4 pb-0 dark:bg-zinc-900"
+	class="flex min-h-screen w-full flex-col items-center justify-center bg-zinc-100 p-4 pb-0 dark:bg-zinc-900"
 >
 	<Header />
 
