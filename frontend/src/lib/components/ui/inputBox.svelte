@@ -1,6 +1,5 @@
 <script lang="ts">
-	import ModelSelector from './ModelSelector.svelte';
-
+	import ModelSelector from '$lib/components/ui/ModelSelector.svelte';
 	import { Button } from '$lib/components/ui/button/';
 	import Send from '@lucide/svelte/icons/send';
 	import * as Card from '$lib/components/ui/card';
@@ -12,7 +11,8 @@
 	let message = $state('');
 	let scrolledToBottom = $derived(scrollProgress >= 0.99);
 	let responding = $state(false);
-
+	import { Label } from '$lib/components/ui/label';
+	import { Switch } from '$lib/components/ui/switch/index.js';
 	const submit = async () => {
 		if (message.trim().length === 0 || !ai.active) return false;
 
@@ -59,7 +59,23 @@
 						<Send />
 					</Button>
 				</div>
-				<ModelSelector disabled={responding} />
+				<div class="flex justify-between">
+					<ModelSelector disabled={responding} />
+
+					<div class="flex-col items-end justify-end gap-2">
+						<div class="flex items-center justify-end gap-2">
+							<Label
+								for="grounding"
+								class="text-sm font-medium {!ai.grounding ? 'text-gray-500' : ''}">Grounding</Label
+							>
+
+							<Switch id="grounding" bind:checked={ai.grounding} />
+						</div>
+						<Label class="text-xs text-gray-500">
+							Use context from Concordia's website on the BCompSc program.</Label
+						>
+					</div>
+				</div>
 			</div>
 		</Card.Content>
 	</Card.Root>

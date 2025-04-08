@@ -43,6 +43,19 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
+		"@dqbd/tiktoken": "^1.0.20",
+		"@langchain/community": "^0.3.39",
+		"@langchain/core": "^0.3.43",
+		"@langchain/ollama": "^0.2.0",
+		"@langchain/openai": "^0.5.4",
+		"@mozilla/readability": "^0.6.0",
+		"@types/html-to-text": "^9.0.4",
+		"cheerio": "^1.0.0",
+		"chromadb": "^2.2.0",
+		"chromadb-default-embed": "^2.14.0",
+		"html-to-text": "^9.0.5",
+		"jsdom": "^26.0.0",
+		"langchain": "^0.3.20",
 		"mode-watcher": "^0.5.1",
 		"ollama": "^0.5.14"
 	}

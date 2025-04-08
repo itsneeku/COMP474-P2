@@ -7,6 +7,7 @@
 	import { ai, messages, resetChatHistory } from '$lib/ai.svelte';
 
 	let host = $state(ai.host);
+	let chromaHost = $state(ai.chromaHost);
 	let loading = $state(false);
 
 	let open = $state(false);
@@ -15,6 +16,7 @@
 	$effect(() => {
 		if (open) {
 			host = ai.host;
+			chromaHost = ai.chromaHost;
 			error = '';
 		}
 	});
@@ -48,6 +50,10 @@
 			<div class="grid grid-cols-4 items-center gap-4">
 				<Label for="host" class="text-right">Host</Label>
 				<Input id="host" bind:value={host} class="col-span-3" />
+			</div>
+			<div class="grid grid-cols-4 items-center gap-4">
+				<Label for="chromaHost" class="text-right">Chroma</Label>
+				<Input id="chromaHost" bind:value={chromaHost} class="col-span-3" />
 			</div>
 			{#if error}
 				<Label class="text-center text-red-500">{error}</Label>
