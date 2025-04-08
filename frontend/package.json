@@ -23,10 +23,12 @@
 		"@tailwindcss/postcss": "^4.0.14",
 		"bits-ui": "^0.22.0",
 		"clsx": "^2.1.1",
+		"cmdk-sv": "^0.0.19",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^2.46.1",
 		"globals": "^15.14.0",
+		"lucide-svelte": "^0.487.0",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
@@ -41,6 +43,7 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
-		"mode-watcher": "^0.5.1"
+		"mode-watcher": "^0.5.1",
+		"ollama": "^0.5.14"
 	}
 }
